@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteTodo } from '../actions'
+import { deleteTodo, markComplete } from '../actions'
 
 const Todos = (props) => {
 
@@ -16,11 +16,24 @@ const Todos = (props) => {
             {props.todos.map(todo => {
                 return(
                     <div key={todo.id} style={{background: "lightgray", width: "30%", margin: "10px auto", padding: "10px"}}>
-                        <p>{todo.value}</p>
+                        <p style={{
+                            textDecoration: `${todo.completed ? "line-through" : "none"}`,
+                            color: `${todo.completed ? "red" : "white"}`
+                        }}>{todo.value}</p>
+
                         <button
-                        id={todo.id}
-                        onClick={handelDeleteTodo}
+                            id={todo.id}
+                            onClick={handelDeleteTodo}
                         >x</button>
+
+                        <button
+                            id={todo.id}
+                            onClick={e => {
+                                e.preventDefault();
+                                props.markComplete(e.target.id)
+                            }}
+                        >mark complete</button>
+
                     </div>
                 );
             })}
@@ -34,4 +47,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { deleteTodo })(Todos)
+export default connect(mapStateToProps, { deleteTodo, markComplete })(Todos)

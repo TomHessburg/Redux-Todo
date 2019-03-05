@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO } from '../actions';
+import { ADD_TODO, DELETE_TODO, MARK_COMPLETE } from '../actions';
 
 const initialState = {
   todos: [
@@ -16,7 +16,6 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
-    console.log('In the reducer', state, action);
 
     switch(action.type){
         case ADD_TODO:
@@ -30,12 +29,20 @@ export const reducer = (state = initialState, action) => {
                     }
                 ]
         };
-
         case DELETE_TODO:
             return{
                 todos: state.todos.filter(todo => `${todo.id}` !== action.payload)
-            }
-
+        }
+        case MARK_COMPLETE:
+            return{
+                todos: state.todos.map(todo => {
+                    if(`${todo.id}` === action.payload){
+                        todo.completed = !todo.completed
+                    }
+                    console.log(todo);
+                    return todo;
+                })
+        }
         default:
             return state;
     }
