@@ -1,5 +1,6 @@
 
 export const ADD_TODO = "ADD_TODO";
+export const DELETE_TODO = "DELETE_TODO"
 
 export const addTodo = inputValue => {
   console.log("in action creator: ", inputValue);
@@ -8,4 +9,11 @@ export const addTodo = inputValue => {
     payload: inputValue
   };
 };
- 
+
+export const deleteTodo = id => {
+  return {
+    type: DELETE_TODO,
+    payload: id
+  }
+}
+  
